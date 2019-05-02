@@ -7,6 +7,7 @@ import threading
 
 """
 爬取句子迷网站龙族1-5部相关的经典语句，使用了代理ip进行反反爬虫
+get_random_proxies方法的隧道验证信息已经过期，需要到阿布云注册申请才能运行程序
 author:whime
 date:19:02 2019/05/02
 """
@@ -135,8 +136,6 @@ if __name__ == '__main__':
 	linkList.append(dragon4)
 	linkList.append(dragon5)
 
-
 	sc=sentenceCrawler(linkList)
 	sc.startCrawl()
-	print("总共跳过了"+str(sc.skipNum))
-
+	# print("总共跳过了"+str(sc.skipNum))
