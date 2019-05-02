@@ -1,4 +1,3 @@
-#爬取句子迷网站龙族相关的经典语句
 import requests
 from bs4 import BeautifulSoup
 import re
@@ -6,7 +5,11 @@ import time
 import random
 import threading
 
-
+"""
+爬取句子迷网站龙族1-5部相关的经典语句，使用了代理ip进行反反爬虫
+author:whime
+date:19:02 2019/05/02
+"""
 
 class sentenceCrawler:
 	def __init__(self,linkList):
