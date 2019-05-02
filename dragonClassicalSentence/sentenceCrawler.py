@@ -10,7 +10,7 @@ from fake_useragent import UserAgent
 
 
 class sentenceCrawler:
-	def __init__(self,linkList,ipList):
+	def __init__(self,linkList):
 		self.linkList=linkList
 		self.sentenceBox=[]
 		self.user_agent=[
@@ -23,16 +23,16 @@ class sentenceCrawler:
                     "Mozilla/5.0 (X11; Linux i686) AppleWebKit/535.7 (KHTML, like Gecko) Ubuntu/11.04 Chromium/16.0.912.77 Chrome/16.0.912.77 Safari/535.7",
                     "Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:10.0) Gecko/20100101 Firefox/10.0 "
 		]
-		self.ipList=ipList
+		# self.ipList=ipList
 
 	# 获取代理
-	def get_random_proxies(self):
-		proxy_list = []
-		for ip in self.ipList:
-			proxy_list.append('http://' + ip)
-		proxy_ip = random.choice(proxy_list)
-		proxies = {'https': proxy_ip}
-		return proxies
+	# def get_random_proxies(self):
+	# 	proxy_list = []
+	# 	for ip in self.ipList:
+	# 		proxy_list.append('http://' + ip)
+	# 	proxy_ip = random.choice(proxy_list)
+	# 	proxies = {'https': proxy_ip}
+	# 	return proxies
 
 	def CrawlOnePage(self,link,part):
 		#请求延时
@@ -41,9 +41,9 @@ class sentenceCrawler:
 					  'Host':'www.juzimi.com',
 					  'Referer':'https://www.juzimi.com/article/'}
 		time.sleep(random.random()*3)
-		proxies=self.get_random_proxies()
-		print(proxies)
-		res=requests.get(link,headers=header,proxies=proxies)
+		# proxies=self.get_random_proxies()
+		# print(proxies)
+		res=requests.get(link,headers=header)
 		print(res.status_code)
 		soup=BeautifulSoup(res.text,"html.parser")
 		for viewField in soup.select(".xlistju"):
@@ -60,11 +60,11 @@ class sentenceCrawler:
 					  'Host':'www.juzimi.com',
 					  'Referer':'https://www.juzimi.com/article/'}
 		for link in self.linkList:
-			part=1
-			proxies=self.get_random_proxies()
-			print(proxies)
+			part=2
+			# proxies=self.get_random_proxies()
+			# print(proxies)
 			#设置代理
-			response=requests.get(link,headers=header,proxies=proxies)
+			response=requests.get(link,headers=header)
 			with open("dragon1.html",'w',encoding="utf-8") as ff:
 				ff.write(response.text)
 			# response.encoding='gbk'
@@ -112,15 +112,15 @@ def get_ip_list(url, headers):
 if __name__ == '__main__':
 	#需要爬取的五个链接
 	# dragon1="https://www.juzimi.com/article/龙族"
-	# dragon2="https://www.juzimi.com/article/26052"
+	dragon2="https://www.juzimi.com/article/26052"
 	# dragon3="https://www.juzimi.com/article/%E9%BE%99%E6%97%8F3%C2%B7%E9%BB%91%E6%9C%88%E4%B9%8B%E6%BD%AE"
 	# dragon4="https://www.juzimi.com/article/113093"
 	# dragon5="https://www.juzimi.com/article/272635"
 	linkList=[]
 
-	dragon1="https://www.baidu.com"
-	linkList.append(dragon1)
-	# linkList.append(dragon2)
+	# dragon1="https://www.baidu.com"
+	# linkList.append(dragon1)
+	linkList.append(dragon2)
 	# 	# linkList.append(dragon3)
 	# 	# linkList.append(dragon4)
 	# 	# linkList.append(dragon5)
@@ -129,8 +129,8 @@ if __name__ == '__main__':
 	headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36'
     }
-	ipList=get_ip_list('http://www.xicidaili.com/nn/1',headers=headers)
-	sc=sentenceCrawler(linkList,ipList)
-	# sc=sentenceCrawler(linkList)
+	# ipList=get_ip_list('http://www.xicidaili.com/nn/1',headers=headers)
+	# sc=sentenceCrawler(linkList,ipList)
+	sc=sentenceCrawler(linkList)
 	sc.startCrawl()
 
